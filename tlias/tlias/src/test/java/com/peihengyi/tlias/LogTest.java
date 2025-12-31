@@ -20,6 +20,9 @@ public class LogTest {
                 }
                 log.info("计算结果为: "+sum);
                 log.debug("结束计算...");
+                log.trace("trace....");
+                log.warn("warn...");
+                log.error("error....");
         }
 
 }
