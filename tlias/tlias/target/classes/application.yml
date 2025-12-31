@@ -1,0 +1,17 @@
+spring:
+    application:
+        name: tlias
+
+    datasource:
+        url: jdbc:mysql://localhost:3306/tlias
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: Phy222205
+
+
+mybatis:
+    configuration:
+        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+        map-underscore-to-camel-case: true
+
+
