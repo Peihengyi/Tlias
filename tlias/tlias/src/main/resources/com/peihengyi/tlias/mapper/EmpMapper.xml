@@ -7,10 +7,21 @@
                 SELECT e.* FROM emp e
                 LEFT JOIN dept d
                 ON e.dept_id = d.id
-                WHERE e.is_delete = 0
-                AND e.name LIKE CONCAT('%', #{name}, '%')
-                AND e.gender = #{gender}
-                AND e.entry_date BETWEEN #{begin} AND #{end}
+                <where>
+                        e.is_delete = 0
+                        <if test="name != null and name != ''">
+                                AND e.name LIKE CONCAT('%', #{name}, '%')
+                        </if>
+                        <if test="gender != null">
+                                AND e.gender = #{gender}
+                        </if>
+                        <if test="begin != null">
+                                AND e.entry_date &gt;= #{begin}
+                        </if>
+                        <if test="end != null">
+                                AND e.entry_date &lt; #{end}
+                        </if>
+                </where>
                 ORDER BY e.id
         </select>
 </mapper>
