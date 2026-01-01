@@ -1,5 +1,6 @@
 package com.peihengyi.tlias.controller;
 
+import com.peihengyi.tlias.pojo.EmpQueryParam;
 import com.peihengyi.tlias.pojo.Result;
 import com.peihengyi.tlias.service.EmpService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,12 +19,8 @@ public class EmpController {
         private EmpService empService;
 
         @GetMapping("/emps")
-        public Result pageResult(@RequestParam(defaultValue = "1") Integer page,
-                                 @RequestParam(defaultValue = "10") Integer pageSize,
-                                 String name, Integer gender,
-                                 @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin,
-                                 @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end){
-                log.info("{}{}{}{}{}{}", page, pageSize, name, gender,begin,end);
-                return Result.success(empService.pageResult(page, pageSize, name, gender, begin, end));
+        public Result pageResult(EmpQueryParam empQueryParam){
+                log.info("{}", empQueryParam);
+                return Result.success(empService.pageResult(empQueryParam));
         }
 }

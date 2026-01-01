@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.peihengyi.tlias.mapper.EmpMapper;
 import com.peihengyi.tlias.pojo.Dept;
 import com.peihengyi.tlias.pojo.Emp;
+import com.peihengyi.tlias.pojo.EmpQueryParam;
 import com.peihengyi.tlias.pojo.PageResult;
 import com.peihengyi.tlias.service.EmpService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +22,9 @@ public class EmpServiceImpl implements EmpService {
         private EmpMapper empMapper;
 
         @Override
-        public PageResult pageResult(Integer page, Integer pageSize, String name, Integer gender, LocalDate begin, LocalDate end){
-                PageHelper.startPage(page, pageSize);
-                List<Emp> empList = empMapper.empList(name, gender, begin, end);
+        public PageResult pageResult(EmpQueryParam empQueryParam){
+                PageHelper.startPage(empQueryParam.getPage(), empQueryParam.getPageSize());
+                List<Emp> empList = empMapper.empList(empQueryParam);
                 Page<Emp> p = (Page<Emp>) empList;
                 return new PageResult(p.getTotal(), p.getResult());
         }
