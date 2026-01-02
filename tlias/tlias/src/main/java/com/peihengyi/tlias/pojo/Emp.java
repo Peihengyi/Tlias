@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -24,5 +25,6 @@ public class Emp {
         private Integer deptId; //关联的部门ID
         private LocalDateTime createTime; //创建时间
         private LocalDateTime updateTime;
-        private Integer isDelete;
+        private Integer isDelete = 0;
+        private List<EmpExpr> exprList;
 }
