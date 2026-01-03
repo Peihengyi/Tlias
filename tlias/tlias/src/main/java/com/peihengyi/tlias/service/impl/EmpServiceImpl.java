@@ -4,14 +4,13 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.peihengyi.tlias.mapper.EmpExprMapper;
 import com.peihengyi.tlias.mapper.EmpMapper;
-import com.peihengyi.tlias.pojo.Dept;
-import com.peihengyi.tlias.pojo.Emp;
-import com.peihengyi.tlias.pojo.EmpQueryParam;
-import com.peihengyi.tlias.pojo.PageResult;
+import com.peihengyi.tlias.pojo.*;
+import com.peihengyi.tlias.service.EmpLogService;
 import com.peihengyi.tlias.service.EmpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
@@ -25,6 +24,8 @@ public class EmpServiceImpl implements EmpService {
         private EmpMapper empMapper;
         @Autowired
         private EmpExprMapper empExprMapper;
+        @Autowired
+        private EmpLogService empLogService;
 
         @Override
         public PageResult pageResult(EmpQueryParam empQueryParam){
@@ -34,16 +35,22 @@ public class EmpServiceImpl implements EmpService {
                 return new PageResult(p.getTotal(), p.getResult());
         }
 
+        @Transactional(rollbackFor = Exception.class)
         @Override
         public void addEmp(Emp emp){
-                emp.setCreateTime(LocalDateTime.now());
-                empMapper.basicEmp(emp);
-                if(!CollectionUtils.isEmpty(emp.getExprList())){
-                        Integer id = empMapper.getID();
-                        empExprMapper
-
+                try {
+                        emp.setCreateTime(LocalDateTime.now());
+                        log.info("{}", emp.getCreateTime());
+                        empMapper.basicEmp(emp);
+                        if(!CollectionUtils.isEmpty(emp.getExprList())){
+                                List<EmpExpr> empExprList = emp.getExprList();
+                                empExprList.forEach(empExpr -> {empExpr.setEmpId(emp.getId());});
+                                log.info("{}", empExprList);
+                                empExprMapper.exprEmp(emp.getExprList());
+                        }
+                } finally {
+                        EmpLog empLog = new EmpLog(null, LocalDateTime.now(), "new emp:" + emp);
+                        empLogService.insertLog(empLog);
                 }
-
-
         }
 }
