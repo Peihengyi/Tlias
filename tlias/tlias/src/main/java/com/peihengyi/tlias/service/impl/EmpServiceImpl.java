@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -29,11 +28,11 @@ public class EmpServiceImpl implements EmpService {
         private EmpLogService empLogService;
 
         @Override
-        public PageResult pageResult(EmpQueryParam empQueryParam){
+        public PageResultEmp pageResult(EmpQueryParam empQueryParam){
                 PageHelper.startPage(empQueryParam.getPage(), empQueryParam.getPageSize());
                 List<Emp> empList = empMapper.empList(empQueryParam);
                 Page<Emp> p = (Page<Emp>) empList;
-                return new PageResult(p.getTotal(), p.getResult());
+                return new PageResultEmp(p.getTotal(), p.getResult());
         }
 
         @Transactional(rollbackFor = Exception.class)

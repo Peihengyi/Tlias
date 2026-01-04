@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PageResult {
+public class PageResultEmp {
         private Long numOfRecord;
         private List<Emp> findPageEmp;
 }

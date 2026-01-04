@@ -2,11 +2,10 @@ package com.peihengyi.tlias.mapper;
 
 import com.peihengyi.tlias.pojo.Emp;
 import com.peihengyi.tlias.pojo.EmpQueryParam;
-import com.peihengyi.tlias.pojo.PageResult;
 import org.apache.ibatis.annotations.*;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface EmpMapper {
@@ -24,4 +23,7 @@ public interface EmpMapper {
         Emp getEmp(Integer id);
 
         void updateEmp(Emp emp);
+
+        @MapKey("pos")
+        List<Map<String, Object>> countEmpJob();
 }

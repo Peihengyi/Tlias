@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.peihengyi.tlias.mapper.ClazzMapper">
+        <select id="getClazz" resultType="com.peihengyi.tlias.pojo.Clazz">
+                SELECT c.id,
+                       c.name,
+                       c.room,
+                       c.begin_date,
+                       c.end_date,
+                       c.master_id,
+                       e.name,
+                       c.create_time,
+                       c.update_time,
+                        CASE WHEN NOW() > c.end_date THEN 'End Class'
+                            WHEN NOW() &lt; c.begin_date THEN 'Not Begin'
+                            ELSE 'In The Progress'
+                        END AS Status
+                FROM clazz c LEFT JOIN emp e ON c.master_id = e.id
+                <where>
+                        AND c.is_delete = 0
+                        <if test="name != null">AND c.name LIKE  CONCAT('%', #{name}, '%')</if>
+                        <if test="begin != null">AND c.begin_date = #{begin}</if>
+                        <if test="end != null">AND c.end_date = #{end}</if>
+                </where>
+        </select>
+
+</mapper>
