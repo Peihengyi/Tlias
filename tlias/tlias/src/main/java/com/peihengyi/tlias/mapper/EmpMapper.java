@@ -3,10 +3,7 @@ package com.peihengyi.tlias.mapper;
 import com.peihengyi.tlias.pojo.Emp;
 import com.peihengyi.tlias.pojo.EmpQueryParam;
 import com.peihengyi.tlias.pojo.PageResult;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,4 +17,11 @@ public interface EmpMapper {
         @Options(useGeneratedKeys = true, keyProperty = "id")
         @Insert("INSERT INTO  emp(image, username, name, gender, job, entry_date, dept_id, phone, salary, emp.create_time, update_time) VALUES (#{image}, #{username}, #{name}, #{gender}, #{job}, #{entryDate}, #{deptId}, #{phone}, #{salary}, #{createTime}, NOW())")
         void basicEmp(Emp emp);
+
+
+        void deleteEmp(List<Integer> empId);
+
+        Emp getEmp(Integer id);
+
+        void updateEmp(Emp emp);
 }

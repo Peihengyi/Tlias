@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -28,6 +29,24 @@ public class EmpController {
                 log.info("{}", emp);
                 empService.addEmp(emp);
                 return Result.success();
-
         }
+
+        @DeleteMapping("/emps")
+        public Result deleteEmp(@RequestBody List<Integer> ids){
+                empService.deleteEmp(ids);
+                return Result.success();
+        }
+
+        @GetMapping("/emps/{id}")
+        public Result getEmp(@PathVariable Integer id){
+                return Result.success(empService.getEmp(id));
+        }
+
+
+        @PutMapping("/emps")
+        public Result updateEmp(@RequestBody Emp emp){
+                empService.updateEmp(emp);
+                return Result.success();
+        }
+
 }

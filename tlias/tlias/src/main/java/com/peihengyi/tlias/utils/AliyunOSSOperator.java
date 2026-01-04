@@ -4,6 +4,7 @@ import com.aliyun.oss.*;
 import com.aliyun.oss.common.auth.CredentialsProviderFactory;
 import com.aliyun.oss.common.auth.EnvironmentVariableCredentialsProvider;
 import com.aliyun.oss.common.comm.SignVersion;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
@@ -14,8 +15,13 @@ import java.util.UUID;
 
 @Component
 public class AliyunOSSOperator {
-        String bucketName = "java-web-billpei";
 
+        @Value("${aliyun.oss.endpoint}")
+        private String endpoint;
+        @Value("${aliyun.oss.bucketName}")
+        private String bucketName;
+        @Value("${aliyun.oss.region}")
+        private String region;
         public String upload(byte[] content, String originalFilename) throws  Exception{
 
                 //file name:
@@ -26,8 +32,7 @@ public class AliyunOSSOperator {
                 ClientBuilderConfiguration clientBuilderConfiguration = new ClientBuilderConfiguration();
                 clientBuilderConfiguration.setSignatureVersion(SignVersion.V4);
                 EnvironmentVariableCredentialsProvider credentialsProvider = CredentialsProviderFactory.newEnvironmentVariableCredentialsProvider();
-                String region = "cn-beijing";
-                String endpoint = "https://oss-cn-beijing.aliyuncs.com";
+
                 OSS ossClient = OSSClientBuilder.create()
                                 .endpoint(endpoint)
                                 .credentialsProvider(credentialsProvider)
