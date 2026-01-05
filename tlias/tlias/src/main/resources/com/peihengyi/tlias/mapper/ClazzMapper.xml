@@ -26,4 +26,9 @@
                 </where>
         </select>
 
+        <update id="updateClazz">
+                UPDATE clazz SET name = #{name}, room = #{room}, begin_date = #{beginDate}, end_date = #{endDate}, master_id = #{masterId}, clazz.subject = #{subject}
+                WHERE id = #{id}
+        </update>
+
 </mapper>

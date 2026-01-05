@@ -11,4 +11,6 @@ public interface ClazzService {
         PageResultClazz getClazz(ClazzQueryParam clazzQueryParam);
         void deleteClazz(Integer id);
         void addClazz(Clazz clazz);
+        Clazz getIdClazz(Integer id);
+        void updateClazz(Clazz clazz);
 }

@@ -19,4 +19,9 @@ public interface ClazzMapper {
 
         @Insert("INSERT INTO clazz(name, room, begin_date, end_date, master_id, subject, create_time, update_time) VALUES (#{name}, #{room}, #{beginDate}, #{endDate}, #{masterId}, #{subject}, NOW(), NOW())")
         void addClazz(Clazz clazz);
+
+        @Select("SELECT * FROM clazz WHERE id = #{id} AND is_delete = 0")
+        Clazz getIdClazz(Integer id);
+
+        void updateClazz(Clazz clazz);
 }

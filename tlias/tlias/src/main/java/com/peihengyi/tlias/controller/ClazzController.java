@@ -5,7 +5,6 @@ import com.peihengyi.tlias.pojo.ClazzQueryParam;
 import com.peihengyi.tlias.pojo.Result;
 import com.peihengyi.tlias.service.ClazzService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +28,18 @@ public class ClazzController {
         @PostMapping("/clazzs")
         public Result addClazz(@RequestBody Clazz clazz){
                 clazzService.addClazz(clazz);
+                return Result.success();
+        }
+
+        @GetMapping("/clazzs/{id}")
+        public Result getIdClazz(@PathVariable Integer id){
+                Clazz clazz = clazzService.getIdClazz(id);
+                return Result.success();
+        }
+
+        @PutMapping("/clazzs")
+        public Result updateClazz(@RequestBody Clazz clazz){
+                clazzService.updateClazz(clazz);
                 return Result.success();
         }
 }
